@@ -53,4 +53,6 @@ class ServiceRegistry {
       return willBeEliminated;
     });
   }
+
+  Map<String, Service> get services => _services;
 }
