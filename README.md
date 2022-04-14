@@ -1,6 +1,7 @@
 # Serendipia
-
-![Serendipia]('./resources/serendipia.png')
+<p align="center">
+  <img src="https://github.com/ushieru/serendipia/blob/main/resources/serendipia.png" alt="Serendipia" />
+</p>
 
 Serendipia is a RESTful (Representational State Transfer) for the purpose of discovery, load balancing and fault tolerance.
 
