@@ -45,7 +45,7 @@ class ServicesApi {
     router.get('/<servicename>', (Request request, String servicename) async {
       var service = serviceRegistry.get(servicename);
       if (service == null) return Response.notFound(null);
-      return Response.ok('${service.toJson()}',
+      return Response.ok(json.encode(service.toJson()),
           headers: {'Content-Type': 'application/json'});
     });
 
@@ -53,7 +53,7 @@ class ServicesApi {
         (Request request, String servicename, String serviceversion) async {
       var service = serviceRegistry.get(servicename, version: serviceversion);
       if (service == null) return Response.notFound(null);
-      return Response.ok('${service.toJson()}',
+      return Response.ok(json.encode(service.toJson()),
           headers: {'Content-Type': 'application/json'});
     });
 
