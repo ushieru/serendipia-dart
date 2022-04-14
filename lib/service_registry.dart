@@ -5,6 +5,13 @@ import 'package:version/version.dart';
 class ServiceRegistry {
   final Map<String, Service> _services = <String, Service>{};
   final int timeout = 300;
+  static ServiceRegistry? _serviceRegistry;
+
+  ServiceRegistry._();
+
+  factory ServiceRegistry() {
+    return _serviceRegistry ??= ServiceRegistry._();
+  }
 
   Service? get(String name, {version = '1.0.0'}) {
     Version _version = Version.parse(version);
