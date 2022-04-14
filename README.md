@@ -3,7 +3,7 @@
   <img src="./resources/serendipia.png" alt="Serendipia" />
 </p>
 
-Serendipia is a simple RESTful (Representational State Transfer) for the purpose of discovery, load balancing and fault tolerance.
+Serendipia is a simple RESTful (Representational State Transfer) gateway service for the purpose of discovery, load balancing and failover.
 
 ## Documentation
 
