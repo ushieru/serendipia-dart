@@ -1,10 +1,11 @@
 import 'dart:math';
+import 'package:serendipia/helpers/config.dart';
 import 'package:serendipia/models/service.dart';
 import 'package:version/version.dart';
 
 class ServiceRegistry {
   final Map<String, Service> _services = <String, Service>{};
-  final int timeout = 10;
+  final int heartBeat = Config().heartBeat;
   static ServiceRegistry? _serviceRegistry;
 
   ServiceRegistry._();
@@ -49,7 +50,7 @@ class ServiceRegistry {
   void cleanup() {
     final now = DateTime.now().millisecondsSinceEpoch / 1000;
     _services.removeWhere((key, service) {
-      var willBeEliminated = now - service.timestamp > timeout;
+      var willBeEliminated = now - service.timestamp > heartBeat;
       if (willBeEliminated) {
         print('[ServiceRegistry] Eliminating service: $key');
       }

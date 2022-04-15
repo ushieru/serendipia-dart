@@ -1,22 +1,15 @@
 import 'dart:async';
 
+import 'package:serendipia/helpers/config.dart';
 import 'package:serendipia/models/circuit_breaker_state.dart';
 import 'package:shelf/shelf.dart';
 import 'package:http/http.dart' as http;
 
 class CircuitBreaker {
   final Map<String, CircuitBreakerState> _states = {};
-  final int _failureThreshold;
-  final int _cooldownPeriod;
-  final int _requestTimeout;
-
-  CircuitBreaker({
-    int failureThreshold = 5,
-    int cooldownPeriod = 10,
-    int requestTimeout = 2,
-  })  : _failureThreshold = failureThreshold,
-        _cooldownPeriod = cooldownPeriod,
-        _requestTimeout = requestTimeout;
+  final int _failureThreshold = Config().failureThreshold;
+  final int _cooldownPeriod = Config().cooldownPeriod;
+  final int _requestTimeout = Config().requestTimeout;
 
   Future<Response> callService(String method, String url,
       {Map<String, String>? headers, Object? body}) async {
