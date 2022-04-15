@@ -22,8 +22,9 @@ class CircuitBreaker {
     try {
       switch (method) {
         case 'GET':
-          microResponse =
-              await http.get(uri).timeout(Duration(seconds: _requestTimeout));
+          microResponse = await http
+              .get(uri, headers: headers)
+              .timeout(Duration(seconds: _requestTimeout));
           break;
         case 'POST':
           microResponse = await http
