@@ -49,7 +49,7 @@ app.listen(PORT, () => {
 
 **[SerendipiaServer]**/**[MicroServiceName]**/**[MicroServiceURI]**
 
-#### By example:
+#### Example:
 ```js
 // Express-example routes
 app.get('/user', (_request, response) => {
