@@ -18,7 +18,7 @@ $ serendipia --port 5000
 # Or with alias
 $ serendipia -p 5000
 ```
-
+## How works?
 #### Register MicroService
 ```js
 // Express example
@@ -49,7 +49,7 @@ app.listen(PORT, () => {
 
 **[SerendipiaServer]**/**[MicroServiceName]**/**[MicroServiceURI]**
 
-#### By example:
+#### Example:
 ```js
 // Express-example routes
 app.get('/user', (_request, response) => {
@@ -105,4 +105,6 @@ You can see the registered microservices grouped by name.
 ```
 
 ## In progress
+- [ ] Failover
+- [ ] CircuitBreaker
 - [ ] Version support
