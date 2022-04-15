@@ -4,7 +4,7 @@ import 'package:version/version.dart';
 
 class ServiceRegistry {
   final Map<String, Service> _services = <String, Service>{};
-  final int timeout = 300;
+  final int timeout = 10;
   static ServiceRegistry? _serviceRegistry;
 
   ServiceRegistry._();
