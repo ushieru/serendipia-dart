@@ -7,16 +7,37 @@ Serendipia is a simple RESTful (Representational State Transfer) gateway service
 
 ## Documentation
 
-#### Init Serendipia
+#### Quickstart
 ```bash
-# Use a default port
 $ serendipia
+```
+## Defaults
+- port: 5000
+- micreserviceHeartBeat: 5 - In seconds
+- failureThreshold: 5
+- cooldownPeriod: 10 - In seconds
+- requestTimeout: 2 - In seconds
+## Override defaults
+| Option           | Abbr | Default |
+| ---------------- | ---- | ------- |
+| port             | p    | 5000    |
+| heartBeat        | h    | 5       |
+| failureThreshold | f    | 5       |
+| cooldownPeriod   | c    | 10      |
+| requestTimeout   | r    | 2       |
+| jwt              | j    | Empty   |
 
-# You can assign a port
-$ serendipia --port 5000
+```bash
+# Example
+$ serendipia --port 8080 --heartBeat 1 --failureThreshold 3 --cooldownPeriod 5 --requestTimeout 1
 
-# Or with alias
-$ serendipia -p 5000
+# Example with abbreviations
+$ serendipia -p 8080 -h 1 -f 3 -c 5 -r 1
+```
+## Add JWT
+```bash
+# Check authorization header
+$ serendipia --jwt secretkey
 ```
 ## How works?
 #### Register MicroService
@@ -106,3 +127,4 @@ You can see the registered microservices grouped by name.
 
 ## In progress
 - [ ] Version support
+- [ ] JWT support
