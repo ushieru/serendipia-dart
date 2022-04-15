@@ -11,13 +11,7 @@ Serendipia is a simple RESTful (Representational State Transfer) gateway service
 ```bash
 $ serendipia
 ```
-## Defaults
-- port: 5000
-- micreserviceHeartBeat: 5 - In seconds
-- failureThreshold: 5
-- cooldownPeriod: 10 - In seconds
-- requestTimeout: 2 - In seconds
-## Override defaults
+## Config
 | Option           | Abbr | Default |
 | ---------------- | ---- | ------- |
 | port             | p    | 5000    |
