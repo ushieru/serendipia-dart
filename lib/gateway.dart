@@ -13,7 +13,7 @@ gateway(Request request, [params]) async {
   final method = request.method;
   final url = Uri.parse('http://${service.ip}:${service.port}/$path');
   final body = await request.readAsString();
-  print('PROXY => [$method] $url\n\tbody=>\n$body');
+  print('[Gateway] => [$method] $url\n\tbody=>\n$body');
   switch (method) {
     case 'GET':
       final response = await http.get(url);

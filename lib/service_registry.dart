@@ -29,10 +29,11 @@ class ServiceRegistry {
     final now = (DateTime.now().millisecondsSinceEpoch / 1000).round();
     if (_services.containsKey(key)) {
       _services[key]!.timestamp = now;
-      print('Updated service: $name, $version at $ip:$port');
+      print('[ServiceRegistry] Updated service: $name, $version at $ip:$port');
     } else {
       _services[key] = Service(name, Version.parse(version), ip, port, now);
-      print('Registered service: $name, $version at $ip:$port');
+      print(
+          '[ServiceRegistry] Registered service: $name, $version at $ip:$port');
     }
     return key;
   }
@@ -41,7 +42,7 @@ class ServiceRegistry {
       {String version = '1.0.0'}) {
     final key = '$name$version$ip$port';
     final service = _services.remove(key);
-    if (service != null) print('Eliminating service: $key');
+    if (service != null) print('[ServiceRegistry] Eliminating service: $key');
     return key;
   }
 
@@ -49,7 +50,9 @@ class ServiceRegistry {
     final now = DateTime.now().millisecondsSinceEpoch / 1000;
     _services.removeWhere((key, service) {
       var willBeEliminated = now - service.timestamp > timeout;
-      if (willBeEliminated) print('Eliminating service: $key');
+      if (willBeEliminated) {
+        print('[ServiceRegistry] Eliminating service: $key');
+      }
       return willBeEliminated;
     });
   }
