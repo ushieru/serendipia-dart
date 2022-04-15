@@ -105,6 +105,4 @@ You can see the registered microservices grouped by name.
 ```
 
 ## In progress
-- [ ] Failover
-- [ ] CircuitBreaker
 - [ ] Version support
