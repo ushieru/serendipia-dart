@@ -27,9 +27,9 @@ void main(List<String> arguments) async {
         headers: {'Content-Type': 'application/json'});
   });
 
-  app.mount('/services', ServicesApi().router);
+  app.mount('/services', servicesApi());
 
-  app.all('/<ignored|.*>', Gateway().proxy);
+  app.all('/<ignored|.*>', gateway);
 
   io
       .serve(app, '0.0.0.0', int.tryParse(result['port'] as String) ?? 5000)
