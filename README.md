@@ -18,7 +18,7 @@ $ serendipia --port 5000
 # Or with alias
 $ serendipia -p 5000
 ```
-
+## How works?
 #### Register MicroService
 ```js
 // Express example
