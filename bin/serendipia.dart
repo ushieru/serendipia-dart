@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:args/args.dart';
 import 'package:serendipia/gateway.dart';
 import 'package:serendipia/helpers/config.dart';
@@ -7,6 +5,7 @@ import 'package:serendipia/helpers/init_msg.dart';
 import 'package:serendipia/jwt_checker.dart';
 import 'package:serendipia/service_registry.dart';
 import 'package:serendipia/services_api.dart';
+import 'package:serendipia/templates/index.html.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_router/shelf_router.dart';
@@ -26,6 +25,13 @@ void main(List<String> arguments) async {
   final app = Router();
   final serviceRegistry = ServiceRegistry();
 
+  app.get('/favicon.ico', (_, [__]) => Response.ok(''));
+
+  app.get(
+      '/service-worker.js',
+      (_, [__]) =>
+          Response.ok('', headers: {'content-type': 'text/javascript'}));
+
   app.get('/', (_, [__]) {
     final services = <String, List<Map<String, dynamic>>>{};
     for (var service in serviceRegistry.services.values) {
@@ -35,9 +41,9 @@ void main(List<String> arguments) async {
         services[service.name] = [service.toJson()];
       }
     }
-    final payload = {'config': config.toJson(), 'services': services};
-    return Response.ok(json.encode(payload),
-        headers: {'Content-Type': 'application/json'});
+    return Response.ok(indexHtml(config, services), headers: {
+      'content-type': 'text/html',
+    });
   });
 
   app.mount('/services', servicesApi());
