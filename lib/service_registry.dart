@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:serendipia/helpers/config.dart';
 import 'package:serendipia/models/service.dart';
@@ -9,11 +10,16 @@ class ServiceRegistry {
   static ServiceRegistry? _serviceRegistry;
   final List<void Function()> _handlers = [];
 
-  ServiceRegistry._();
+  ServiceRegistry._() {
+    _initTimer();
+  }
 
   factory ServiceRegistry() {
     return _serviceRegistry ??= ServiceRegistry._();
   }
+
+  void _initTimer() =>
+      Timer.periodic(Duration(seconds: heartBeat), (timer) => cleanup());
 
   void setHandler(void Function() handler) {
     _handlers.add(handler);
@@ -26,7 +32,6 @@ class ServiceRegistry {
   }
 
   Service? get(String name, {version = '1.0.0'}) {
-    cleanup();
     Version _version = Version.parse(version);
     var candidates = _services.values
         .where((service) => service.name == name && service.version >= _version)
@@ -37,7 +42,6 @@ class ServiceRegistry {
 
   String register(String name, String ip, String port,
       {String version = '1.0.0'}) {
-    cleanup();
     final key = '$name$version$ip$port';
     final now = (DateTime.now().millisecondsSinceEpoch / 1000).round();
     if (_services.containsKey(key)) {
@@ -45,6 +49,7 @@ class ServiceRegistry {
       print('[ServiceRegistry] Updated service: $name, $version at $ip:$port');
     } else {
       _services[key] = Service(name, Version.parse(version), ip, port, now);
+      _triggerHandlers();
       print(
           '[ServiceRegistry] Registered service: $name, $version at $ip:$port');
     }
@@ -55,21 +60,25 @@ class ServiceRegistry {
       {String version = '1.0.0'}) {
     final key = '$name$version$ip$port';
     final service = _services.remove(key);
-    if (service != null) print('[ServiceRegistry] Eliminating service: $key');
-    _triggerHandlers();
+    if (service != null) {
+      print('[ServiceRegistry] Unregister service: $key');
+      _triggerHandlers();
+    }
     return key;
   }
 
   void cleanup() {
+    var someRemoved = false;
     final now = DateTime.now().millisecondsSinceEpoch / 1000;
     _services.removeWhere((key, service) {
       var willBeEliminated = now - service.timestamp > heartBeat;
       if (willBeEliminated) {
         print('[ServiceRegistry] Eliminating service: $key');
+        someRemoved = true;
       }
-      _triggerHandlers();
       return willBeEliminated;
     });
+    if (someRemoved) _triggerHandlers();
   }
 
   Map<String, Service> get services => _services;
