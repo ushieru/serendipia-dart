@@ -51,6 +51,12 @@ String mainLayout(String child) => '''
 
 <body>
     $child
+    <script>
+        let socket = new WebSocket("ws://localhost:5000/ws");
+        socket.onmessage = function (event) {
+            console.log(event.data);
+        };
+    </script>
 </body>
 
 </html>

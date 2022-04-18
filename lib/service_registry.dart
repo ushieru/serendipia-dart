@@ -7,6 +7,7 @@ class ServiceRegistry {
   final Map<String, Service> _services = <String, Service>{};
   final int heartBeat = Config().heartBeat;
   static ServiceRegistry? _serviceRegistry;
+  final List<void Function()> _handlers = [];
 
   ServiceRegistry._();
 
@@ -14,7 +15,18 @@ class ServiceRegistry {
     return _serviceRegistry ??= ServiceRegistry._();
   }
 
+  void setHandler(void Function() handler) {
+    _handlers.add(handler);
+  }
+
+  void _triggerHandlers() async {
+    for (var handler in _handlers) {
+      handler();
+    }
+  }
+
   Service? get(String name, {version = '1.0.0'}) {
+    cleanup();
     Version _version = Version.parse(version);
     var candidates = _services.values
         .where((service) => service.name == name && service.version >= _version)
@@ -44,6 +56,7 @@ class ServiceRegistry {
     final key = '$name$version$ip$port';
     final service = _services.remove(key);
     if (service != null) print('[ServiceRegistry] Eliminating service: $key');
+    _triggerHandlers();
     return key;
   }
 
@@ -54,6 +67,7 @@ class ServiceRegistry {
       if (willBeEliminated) {
         print('[ServiceRegistry] Eliminating service: $key');
       }
+      _triggerHandlers();
       return willBeEliminated;
     });
   }
