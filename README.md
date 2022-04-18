@@ -102,7 +102,7 @@ The user microservice is running on port 3000 but I am still making my requests 
 
 ### Micreservices registered
 
-You can see the registered microservices grouped by name.
+You can see the microservice instances grouped by name in real-time.
 
 **localhost:5000**
 
