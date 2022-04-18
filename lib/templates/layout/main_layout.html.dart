@@ -54,7 +54,16 @@ String mainLayout(String child) => '''
     <script>
         let socket = new WebSocket("ws://localhost:5000/ws");
         socket.onmessage = function (event) {
-            console.log(event.data);
+            const services = JSON.parse(event.data);
+            const instances = document.getElementById("instances");
+            const newHTML = Object.entries(services).map(([name, instances]) => {
+                return `<tr>
+                    <td>\${name}</td>
+                    <td style="text-align: center;">\${instances.length}</td>
+                    <td>\${instances.map((instance) => `\${instance.ip}:\${instance.port}`).join('<span style="color: green;"> - </span>')}</td>
+                </tr>`;
+            }).join("");
+            instances.innerHTML = newHTML;
         };
     </script>
 </body>

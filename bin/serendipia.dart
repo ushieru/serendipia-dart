@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:args/args.dart';
 import 'package:serendipia/gateway.dart';
 import 'package:serendipia/helpers/config.dart';
@@ -37,7 +39,15 @@ void main(List<String> arguments) async {
       '/ws',
       (Request request, [__]) => webSocketHandler((webSocket) {
             serviceRegistry.setHandler(() {
-              webSocket.sink.add("reload");
+              final services = <String, List<Map<String, dynamic>>>{};
+              for (var service in serviceRegistry.services.values) {
+                if (services.containsKey(service.name)) {
+                  services[service.name]!.add(service.toJson());
+                } else {
+                  services[service.name] = [service.toJson()];
+                }
+              }
+              webSocket.sink.add(JsonEncoder().convert(services));
             });
           })(request));
 

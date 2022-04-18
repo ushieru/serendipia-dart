@@ -36,7 +36,7 @@ String indexHtml(
                 <th>Instances</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="instances">
             ${services.entries.map((entrie) => '''
                 <tr>
                   <td style="text-align: center;">${entrie.key}</td>
