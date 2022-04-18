@@ -4,7 +4,7 @@ import 'package:args/args.dart';
 import 'package:serendipia/gateway.dart';
 import 'package:serendipia/helpers/config.dart';
 import 'package:serendipia/helpers/init_msg.dart';
-import 'package:serendipia/jwt_checker.dart';
+import 'package:serendipia/helpers/jwt_checker.dart';
 import 'package:serendipia/service_registry.dart';
 import 'package:serendipia/services_api.dart';
 import 'package:serendipia/templates/index.html.dart';

@@ -7,6 +7,8 @@ bool jwtChecker(Request request) {
   if (authHeader == null) return false;
   final config = Config();
   try {
+    final authType = authHeader.split(' ')[0];
+    if (authType != 'Bearer') return false;
     final token = authHeader.split(' ')[1];
     JWT.verify(token, SecretKey(config.jwt));
     return true;
