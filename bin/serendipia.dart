@@ -1,14 +1,17 @@
+import 'dart:convert';
+
 import 'package:args/args.dart';
 import 'package:serendipia/gateway.dart';
 import 'package:serendipia/helpers/config.dart';
 import 'package:serendipia/helpers/init_msg.dart';
-import 'package:serendipia/jwt_checker.dart';
+import 'package:serendipia/helpers/jwt_checker.dart';
 import 'package:serendipia/service_registry.dart';
 import 'package:serendipia/services_api.dart';
 import 'package:serendipia/templates/index.html.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_router/shelf_router.dart';
+import 'package:shelf_web_socket/shelf_web_socket.dart';
 
 void main(List<String> arguments) async {
   final parser = _getParser();
@@ -31,6 +34,22 @@ void main(List<String> arguments) async {
       '/service-worker.js',
       (_, [__]) =>
           Response.ok('', headers: {'content-type': 'text/javascript'}));
+
+  app.get(
+      '/ws',
+      (Request request, [__]) => webSocketHandler((webSocket) {
+            serviceRegistry.setHandler(() {
+              final services = <String, List<Map<String, dynamic>>>{};
+              for (var service in serviceRegistry.services.values) {
+                if (services.containsKey(service.name)) {
+                  services[service.name]!.add(service.toJson());
+                } else {
+                  services[service.name] = [service.toJson()];
+                }
+              }
+              webSocket.sink.add(JsonEncoder().convert(services));
+            });
+          })(request));
 
   app.get('/', (_, [__]) {
     final services = <String, List<Map<String, dynamic>>>{};
