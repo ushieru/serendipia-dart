@@ -1,5 +1,5 @@
 name: serendipia
-description: A sample command-line application.
+description: Simple RESTful (Representational State Transfer) gateway service for the purpose of discovery, load balancing and failover.
 version: 1.0.0
 homepage: https://github.com/ushieru/serendipia
 
