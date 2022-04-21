@@ -1,8 +1,0 @@
-port: 5000
-heartBeat: 5
-failureThreshold: 5
-cooldownPeriod: 10
-requestTimeout: 2
-jwt: secretKey
-ignorejwt:
-  - users-service
