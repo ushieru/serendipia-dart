@@ -13,26 +13,28 @@ Download the [lastest version](https://github.com/ushieru/serendipia/releases/ta
 $ serendipia
 ```
 ## Config
-| Option           | Abbr | Default |
-| ---------------- | ---- | ------- |
-| port             | p    | 5000    |
-| heartBeat        | h    | 5       |
-| failureThreshold | f    | 5       |
-| cooldownPeriod   | c    | 10      |
-| requestTimeout   | r    | 2       |
-| jwt              | j    | Empty   |
+| Option           | Default |
+| ---------------- | ------- |
+| port             | 5000    |
+| heartBeat        | 5       |
+| failureThreshold | 5       |
+| cooldownPeriod   | 10      |
+| requestTimeout   | 2       |
+| jwt              | Empty   |
+| ignorejwt        | [ ]     |
 
-```bash
-# Example
-$ serendipia --port 8080 --heartBeat 1 --failureThreshold 3 --cooldownPeriod 5 --requestTimeout 1
-
-# Example with abbreviations
-$ serendipia -p 8080 -h 1 -f 3 -c 5 -r 1
-```
-## Add JWT
-```bash
-# Check authorization header
-$ serendipia --jwt secretkey
+```yaml
+# Example config.yaml
+port: 5000
+heartBeat: 5
+failureThreshold: 5
+cooldownPeriod: 10
+requestTimeout: 2
+# Add JWT
+jwt: secretKey
+# Ignore jwt check for some services
+ignorejwt:
+  - users-service
 ```
 ## How works?
 #### Register MicroService
