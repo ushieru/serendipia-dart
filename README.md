@@ -8,7 +8,7 @@ Serendipia is a simple RESTful (Representational State Transfer) gateway service
 ## Documentation
 
 #### Quickstart
-Download the [lastest version](https://github.com/ushieru/serendipia/releases/tag/stable) and run.
+Download the [lastest version](https://github.com/ushieru/serendipia/releases) and run.
 ```bash
 $ serendipia
 ```
