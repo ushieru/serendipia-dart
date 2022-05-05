@@ -24,7 +24,7 @@ $ serendipia
 | ignorejwt        | [ ]     |
 
 ```yaml
-# Example config.yaml
+# config.yaml
 port: 5000
 heartBeat: 5
 failureThreshold: 5
