@@ -1,0 +1,12 @@
+.dockerignore
+resources
+CHANGELOG.md
+LICENSE
+README.md
+Dockerfile
+build/
+.dart_tool/
+.git/
+.github/
+.gitignore
+.packages
