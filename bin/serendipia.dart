@@ -26,6 +26,7 @@ void main() async {
             : <String>[];
     int? port = checkRunTimeType(ymlConfig['port'], 'int') ??
         int.tryParse(Platform.environment['PORT'] ?? '');
+    print('PORT -> ' + Platform.environment['PORT'].toString());
     Config(
         port: port,
         heartBeat: checkRunTimeType(ymlConfig['heartBeat'], 'int'),
