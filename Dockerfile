@@ -8,5 +8,4 @@ RUN dart compile exe bin/serendipia.dart -o bin/serendipia
 FROM scratch
 COPY --from=build /runtime/ /
 COPY --from=build /app/bin/serendipia /app/bin/
-EXPOSE 5000
 CMD ["/app/bin/serendipia"]
