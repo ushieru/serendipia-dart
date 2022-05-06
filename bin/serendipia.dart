@@ -24,11 +24,9 @@ void main() async {
         checkRunTimeType(ymlConfig['ignorejwt'], 'YamlList') != null
             ? List.castFrom<dynamic, String>(ymlConfig['ignorejwt'])
             : <String>[];
-    int? port = checkRunTimeType(ymlConfig['port'], 'int') ??
-        int.tryParse(Platform.environment['PORT'] ?? '');
-    print('PORT -> ' + Platform.environment['PORT'].toString());
     Config(
-        port: port,
+        port: int.tryParse(Platform.environment['PORT'] ?? 'a') ??
+            checkRunTimeType(ymlConfig['port'], 'int'),
         heartBeat: checkRunTimeType(ymlConfig['heartBeat'], 'int'),
         failureThreshold:
             checkRunTimeType(ymlConfig['failureThreshold'], 'int'),
@@ -37,7 +35,9 @@ void main() async {
         jwt: checkRunTimeType(ymlConfig['jwt'], 'String'),
         instancesIgnoreJWT: ignorejwt);
   }
-  final config = Config();
+  final config = Config(
+    port: int.tryParse(Platform.environment['PORT'] ?? 'a'),
+  );
 
   final app = Router();
   final serviceRegistry = ServiceRegistry();
