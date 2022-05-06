@@ -24,8 +24,10 @@ void main() async {
         checkRunTimeType(ymlConfig['ignorejwt'], 'YamlList') != null
             ? List.castFrom<dynamic, String>(ymlConfig['ignorejwt'])
             : <String>[];
+    int? port = checkRunTimeType(ymlConfig['port'], 'int') ??
+        int.tryParse(Platform.environment['PORT'] ?? '');
     Config(
-        port: checkRunTimeType(ymlConfig['port'], 'int'),
+        port: port,
         heartBeat: checkRunTimeType(ymlConfig['heartBeat'], 'int'),
         failureThreshold:
             checkRunTimeType(ymlConfig['failureThreshold'], 'int'),
