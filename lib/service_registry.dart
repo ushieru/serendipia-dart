@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:serendipia/helpers/config.dart';
 import 'package:serendipia/models/service.dart';
 import 'package:version/version.dart';
 
 class ServiceRegistry {
   final Map<String, Service> _services = <String, Service>{};
+  final Map<String, int> _counter = <String, int>{};
   final int heartBeat = Config().heartBeat;
   static ServiceRegistry? _serviceRegistry;
   final List<void Function()> _handlers = [];
@@ -31,13 +31,21 @@ class ServiceRegistry {
     }
   }
 
+  int _getnextMicro(String name, int maxLimit) {
+    final serviceNum = _counter[name] ??= 0;
+    final virtualNext = serviceNum + 1;
+    final next = virtualNext >= maxLimit ? 0 : virtualNext;
+    _counter[name] = next;
+    return serviceNum;
+  }
+
   Service? get(String name, {version = '1.0.0'}) {
     Version _version = Version.parse(version);
     var candidates = _services.values
         .where((service) => service.name == name && service.version >= _version)
         .toList();
     if (candidates.isEmpty) return null;
-    return candidates[Random().nextInt(candidates.length)];
+    return candidates[_getnextMicro(name, candidates.length)];
   }
 
   String register(String name, String ip, String port,
