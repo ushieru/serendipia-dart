@@ -54,7 +54,7 @@ app.listen(PORT, () => {
     // Register microservice 
     register()
     // Update microservice 
-    setInterval(register, 10000)
+    setInterval(register, 4000)
 
     console.log(`Server run: http://localhost:${PORT}/`)
 })
